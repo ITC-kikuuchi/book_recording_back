@@ -9,4 +9,13 @@ use Illuminate\Http\JsonResponse;
 
 trait ResponseTrait
 {
+    /**
+     * 成功時（200）レスポンス
+     * @param array $responseData
+     * @return JsonResponse
+     */
+    public function okResponse(array $responseData = []): JsonResponse
+    {
+        return response()->json($responseData, HttpStatusConst::OK);
+    }
 }
