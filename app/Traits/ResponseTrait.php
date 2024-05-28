@@ -36,4 +36,13 @@ trait ResponseTrait
     {
         return response()->json([], HttpStatusConst::FORBIDDEN);
     }
+
+    /**
+     * 404エラーレスポンス
+     * @return JsonResponse
+     */
+    public function notFoundResponse(): JsonResponse
+    {
+        return response()->json([], HttpStatusConst::NOT_FOUND);
+    }
 }
