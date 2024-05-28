@@ -60,4 +60,15 @@ trait ResponseTrait
             HttpStatusConst::UNPROCESSABLE_ENTITY,
         );
     }
+
+    /**
+     * 500エラーレスポンス
+     * @param string $key
+     * @param array $value
+     * @return JsonResponse
+     */
+    public function internalServerErrorResponse(array $value = []): JsonResponse
+    {
+        return response()->json($value, HttpStatusConst::INTERNAL_SERVER_ERROR);
+    }
 }
