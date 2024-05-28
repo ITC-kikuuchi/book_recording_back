@@ -19,10 +19,10 @@ return new class extends Migration
             $table->date('publication_year')->nullable()->comment('出版年');
             $table->string('publisher', 255)->nullable()->comment('出版社');
             $table->string('isbn', 255)->nullable()->comment('ISBN');
-            $table->string('cover_Image', 255)->nullable()->comment('カバー画像');
+            $table->string('cover_image', 255)->nullable()->comment('カバー画像');
             $table->integer('number_of_pages')->nullable()->comment('ページ数');
-            $table->unsignedBigInteger('organizer_id')->nullable(false)->comment('ユーザID');
-            $table->foreign('organizer_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->unsignedBigInteger('user_id')->nullable(false)->comment('ユーザID');
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->integer('created_id')->nullable()->comment('登録者');
             $table->integer('updated_id')->nullable()->comment('更新者');
             $table->timestamps();
