@@ -45,4 +45,19 @@ trait ResponseTrait
     {
         return response()->json([], HttpStatusConst::NOT_FOUND);
     }
+
+    /**
+     * 422エラーレスポンス
+     * @param array $errorMessage
+     * @return JsonResponse
+     */
+    public function unprocessableEntityResponse(array $errorMessage): JsonResponse
+    {
+        return response()->json(
+            [
+                'errors' => (object)$errorMessage
+            ],
+            HttpStatusConst::UNPROCESSABLE_ENTITY,
+        );
+    }
 }
