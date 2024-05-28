@@ -17,4 +17,15 @@ class AuthController extends Controller
     public function __construct(protected AuthService $authService)
     {
     }
+
+    /**
+     * ログイン処理
+     *
+     * @param   LoginRequest $request
+     * @return  JsonResponse
+     */
+    public function login(LoginRequest $request): JsonResponse
+    {
+        return $this->authService->login($request);
+    }
 }
