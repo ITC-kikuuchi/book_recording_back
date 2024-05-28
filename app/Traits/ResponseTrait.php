@@ -18,4 +18,13 @@ trait ResponseTrait
     {
         return response()->json($responseData, HttpStatusConst::OK);
     }
+
+    /**
+     * 401エラーレスポンス
+     * @return JsonResponse
+     */
+    public function unauthorizedResponse(): JsonResponse
+    {
+        return response()->json([], HttpStatusConst::UNAUTHORIZED);
+    }
 }
