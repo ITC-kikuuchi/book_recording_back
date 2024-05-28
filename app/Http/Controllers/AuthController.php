@@ -8,5 +8,13 @@ use Illuminate\Http\JsonResponse;
 
 class AuthController extends Controller
 {
-    //
+    /**
+     * AuthController コンストラクタ
+     * AuthService の依存性を注入する
+     *
+     * @param AuthService $authService
+     */
+    public function __construct(protected AuthService $authService)
+    {
+    }
 }
