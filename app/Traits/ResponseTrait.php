@@ -27,4 +27,13 @@ trait ResponseTrait
     {
         return response()->json([], HttpStatusConst::UNAUTHORIZED);
     }
+
+    /**
+     * 403エラーレスポンス
+     * @return JsonResponse
+     */
+    public function forbiddenResponse(): JsonResponse
+    {
+        return response()->json([], HttpStatusConst::FORBIDDEN);
+    }
 }
