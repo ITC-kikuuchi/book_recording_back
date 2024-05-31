@@ -47,11 +47,7 @@ class AuthService
                 // 認証ユーザの ID に紐づくユーザ情報の取得
                 $loginUser = $this->userRepositoryInterface->getUser(Auth::id());
                 // レスポンスデータの作成
-                $responseData = [
-                    User::ID => $loginUser[User::ID],
-                    User::NAME => $loginUser[User::NAME],
-                    User::EMAIL => $loginUser[User::EMAIL],
-                ];
+                $responseData = $this->userResponse($loginUser);
             } else {
                 // ユーザ認証に失敗した場合
                 throw new UnauthorizedException();
@@ -62,5 +58,46 @@ class AuthService
         }
         // 200 レスポンス
         return $this->okResponse($responseData);
+    }
+
+    /**
+     * ログイン情報取得
+     *
+     * @return JsonResponse
+     */
+    public function me(): JsonResponse
+    {
+        // 初期値設定
+        $responseData = [];
+        try {
+            // 認証ユーザの ID に紐づくユーザ情報の取得
+            $loginUser = $this->userRepositoryInterface->getUser(Auth::id());
+            if (!$loginUser) {
+                // ID に紐づくユーザ情報が存在しない場合
+                throw new UnauthorizedException();
+            }
+            // レスポンスデータの作成
+            $responseData = $this->userResponse($loginUser);
+        } catch (Exception $e) {
+            // エラーハンドリング
+            return $this->exceptionHandler($e);
+        }
+        // 200 レスポンス
+        return $this->okResponse($responseData);
+    }
+
+    /**
+     * ユーザに関するレスポンスの作成
+     *
+     * @param object $loginUser
+     * @return array
+     */
+    private function userResponse(object $loginUser): array
+    {
+        return [
+            User::ID => $loginUser->pluck(User::ID)->first(),
+            User::NAME => $loginUser->pluck(User::NAME)->first(),
+            User::EMAIL => $loginUser->pluck(User::EMAIL)->first(),
+        ];
     }
 }
