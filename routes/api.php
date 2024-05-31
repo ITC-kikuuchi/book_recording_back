@@ -13,4 +13,6 @@ Route::post('login', [AuthController::class, 'login']);
 
 // ミドルウェア auth:sanctum を指定したグループ
 Route::group(['middleware' => ['auth:sanctum']], function () {
+    // ログイン情報取得API
+    Route::get('me', [AuthController::class, 'me']);
 });
