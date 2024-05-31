@@ -67,6 +67,7 @@ class AuthService
      */
     public function me(): JsonResponse
     {
+        // 初期値設定
         $responseData = [];
         try {
             // 認証ユーザの ID に紐づくユーザ情報の取得
