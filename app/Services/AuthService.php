@@ -63,4 +63,19 @@ class AuthService
         // 200 レスポンス
         return $this->okResponse($responseData);
     }
+
+    /**
+     * ユーザに関するレスポンスの作成
+     *
+     * @param object $loginUser
+     * @return array
+     */
+    private function userResponse(object $loginUser): array
+    {
+        return [
+            User::ID => $loginUser->pluck(User::ID)->first(),
+            User::NAME => $loginUser->pluck(User::NAME)->first(),
+            User::EMAIL => $loginUser->pluck(User::EMAIL)->first(),
+        ];
+    }
 }
