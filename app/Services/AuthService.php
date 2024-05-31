@@ -47,11 +47,7 @@ class AuthService
                 // 認証ユーザの ID に紐づくユーザ情報の取得
                 $loginUser = $this->userRepositoryInterface->getUser(Auth::id());
                 // レスポンスデータの作成
-                $responseData = [
-                    User::ID => $loginUser[User::ID],
-                    User::NAME => $loginUser[User::NAME],
-                    User::EMAIL => $loginUser[User::EMAIL],
-                ];
+                $responseData = $this->userResponse($loginUser);
             } else {
                 // ユーザ認証に失敗した場合
                 throw new UnauthorizedException();
