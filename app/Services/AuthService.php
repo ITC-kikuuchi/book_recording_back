@@ -93,7 +93,6 @@ class AuthService
      */
     public function logout(): JsonResponse
     {
-        $responseData = [];
         try {
             // ログアウト処理
             Auth::logout();
