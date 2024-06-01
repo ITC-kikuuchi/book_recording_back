@@ -100,6 +100,7 @@ class AuthService
             // エラーハンドリング
             return $this->exceptionHandler($e);
         }
+        // 200 レスポンス
         return $this->okResponse();
     }
 
