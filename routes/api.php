@@ -11,6 +11,9 @@ Route::get('/user', function (Request $request) {
 // ログインAPI
 Route::post('login', [AuthController::class, 'login']);
 
+// ログアウトAPI
+Route::post('logout', [AuthController::class, 'logout']);
+
 // ミドルウェア auth:sanctum を指定したグループ
 Route::group(['middleware' => ['auth:sanctum']], function () {
     // ログイン情報取得API
