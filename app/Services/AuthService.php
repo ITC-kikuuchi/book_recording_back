@@ -87,6 +87,24 @@ class AuthService
     }
 
     /**
+     * ログアウト処理
+     *
+     * @return JsonResponse
+     */
+    public function logout(): JsonResponse
+    {
+        try {
+            // ログアウト処理
+            Auth::logout();
+        } catch (Exception $e) {
+            // エラーハンドリング
+            return $this->exceptionHandler($e);
+        }
+        // 200 レスポンス
+        return $this->okResponse();
+    }
+
+    /**
      * ユーザに関するレスポンスの作成
      *
      * @param object $loginUser
