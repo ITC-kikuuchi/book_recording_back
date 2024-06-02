@@ -17,6 +17,15 @@ class BookController extends Controller
     public function __construct(protected BookService $bookService)
     {
     }
+
+    /**
+     * 書籍一覧取得API
+     *
+     * @return JsonResponse
+     */
+    public function index(): JsonResponse
+    {
+        return $this->bookService->getBooks();
     }
 
     /**
