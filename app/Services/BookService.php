@@ -15,4 +15,13 @@ class BookService
 {
     use ExceptionHandlerTrait;
 
+    /**
+     * BookService コンストラクタ
+     * BookRepositoryInterface の依存性を注入する
+     *
+     * @param BookRepositoryInterface $bookRepositoryInterface
+     */
+    public function __construct(protected BookRepositoryInterface $bookRepositoryInterface)
+    {
+    }
 }
