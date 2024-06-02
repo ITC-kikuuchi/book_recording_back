@@ -19,4 +19,6 @@ Route::post('logout', [AuthController::class, 'logout']);
 Route::group(['middleware' => ['auth:sanctum']], function () {
     // ログイン情報取得API
     Route::get('me', [AuthController::class, 'me']);
+    // 書籍API
+    Route::apiResource('books', BookController::class, ['only' => ['index', 'store', 'show', 'update', 'destroy']]);
 });
