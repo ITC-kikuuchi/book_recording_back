@@ -17,4 +17,14 @@ class BookEloquentRepository implements BookRepositoryInterface
     public function __construct(protected Book $book)
     {
     }
+
+    /**
+     * 書籍一覧取得
+     *
+     * @return object|null
+     */
+    public function getBooks(): object|null
+    {
+        return $this->book->get();
+    }
 }
