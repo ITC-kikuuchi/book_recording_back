@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Repositories\Book;
 
+use App\Models\Book;
+
 class BookEloquentRepository implements BookRepositoryInterface
 {
     /**
