@@ -9,11 +9,14 @@ use Illuminate\Http\Request;
 class BookController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * BookController コンストラクタ
+     * BookService の依存性を注入する
+     *
+     * @param BookService $bookService
      */
-    public function index()
+    public function __construct(protected BookService $bookService)
     {
-        //
+    }
     }
 
     /**
