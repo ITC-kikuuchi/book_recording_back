@@ -23,5 +23,9 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\User\UserRepositoryInterface::class,
             \App\Repositories\User\UserEloquentRepository::class
         );
+        $this->app->bind(
+            \App\Repositories\Book\BookRepositoryInterface::class,
+            \App\Repositories\Book\BookEloquentRepository::class
+        );
     }
 }
