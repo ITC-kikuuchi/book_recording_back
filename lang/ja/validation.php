@@ -154,5 +154,12 @@ return [
     'attributes' => [
         'email' => 'メールアドレス',
         'password' => 'パスワード',
+        'title' => 'タイトル',
+        'author' => '著者',
+        'genre' => 'ジャンル',
+        'publisher' => '出版社',
+        'isbn' => 'ISBN',
+        'cover_image' => 'カバー画像',
+        'user_id' => 'ユーザID'
     ]
 ];
