@@ -63,7 +63,7 @@ class BookService
      * @param BookRequest $request
      * @return JsonResponse
      */
-    public function createBook(Request $request): JsonResponse
+    public function createBook(BookRequest $request): JsonResponse
     {
         try {
             // 登録データの作成

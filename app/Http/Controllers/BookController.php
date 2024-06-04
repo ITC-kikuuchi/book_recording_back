@@ -35,7 +35,7 @@ class BookController extends Controller
      * @param Request $request
      * @return JsonResponse
      */
-    public function store(Request $request): JsonResponse
+    public function store(BookRequest $request): JsonResponse
     {
         return $this->bookService->createBook($request);
     }
