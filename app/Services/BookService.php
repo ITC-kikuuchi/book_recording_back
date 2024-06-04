@@ -57,6 +57,31 @@ class BookService
         return $this->okResponse($responseData);
     }
 
+
+    /**
+     * 登録データの作成
+     *
+     * @param object $request
+     * @return array
+     */
+    public function createBookData(object $request): array
+    {
+        // 登録データの作成
+        return [
+            Book::TITLE => $request[Book::TITLE],
+            Book::AUTHOR => $request[Book::AUTHOR],
+            Book::GENRE => $request[Book::GENRE],
+            Book::PUBLICATION_YEAR => $request[Book::PUBLICATION_YEAR],
+            Book::PUBLISHER => $request[Book::PUBLISHER],
+            Book::ISBN => $request[Book::ISBN],
+            Book::COVER_IMAGE => $request[Book::COVER_IMAGE] ? $this->checkAndUploadFile($request[Book::COVER_IMAGE]) : null,
+            Book::NUMBER_OF_PAGES => $request[Book::NUMBER_OF_PAGES],
+            Book::USER_ID => $request[Book::USER_ID],
+            Book::CREATED_ID => $request[Book::USER_ID],
+            Book::UPDATED_ID => $request[Book::USER_ID],
+        ];
+    }
+
     /**
      * ディレクトリの有無チェック、ディレクトリの作成、画像ファイルのアップロード
      *
