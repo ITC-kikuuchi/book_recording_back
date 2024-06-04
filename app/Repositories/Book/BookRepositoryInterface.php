@@ -12,4 +12,11 @@ interface BookRepositoryInterface
      * @return object|null
      */
     public function getBooks(): object|null;
+
+    /**
+     * 書籍登録
+     *
+     * @param array $bookData
+     */
+    public function createBook(array $bookData);
 }

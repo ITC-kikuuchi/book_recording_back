@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Consts\PathConst;
+use App\Http\Requests\Book\BookRequest;
 use App\Models\Book;
 use App\Repositories\Book\BookRepositoryInterface;
 use App\Traits\ExceptionHandlerTrait;
 use Exception;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
 
 class BookService
 {
@@ -53,5 +55,78 @@ class BookService
         }
         // 200 レスポンス
         return $this->okResponse($responseData);
+    }
+
+    /**
+     * 書籍登録処理
+     *
+     * @param BookRequest $request
+     * @return JsonResponse
+     */
+    public function createBook(BookRequest $request): JsonResponse
+    {
+        try {
+            // 登録データの作成
+            $bookData = $this->createBookData($request);
+            // データベーストランザクションを開始
+            DB::transaction(function () use ($bookData) {
+                // データ登録処理
+                return $this->bookRepositoryInterface->createBook($bookData);
+            });
+        } catch (Exception $e) {
+            // エラーハンドリング
+            return $this->exceptionHandler($e);
+        }
+        // 200 レスポンス
+        return $this->okResponse();
+    }
+
+    /**
+     * 登録データの作成
+     *
+     * @param object $request
+     * @return array
+     */
+    public function createBookData(object $request): array
+    {
+        // 登録データの作成
+        return [
+            Book::TITLE => $request[Book::TITLE],
+            Book::AUTHOR => $request[Book::AUTHOR],
+            Book::GENRE => $request[Book::GENRE],
+            Book::PUBLICATION_YEAR => $request[Book::PUBLICATION_YEAR],
+            Book::PUBLISHER => $request[Book::PUBLISHER],
+            Book::ISBN => $request[Book::ISBN],
+            Book::COVER_IMAGE => $request[Book::COVER_IMAGE] ? $this->checkAndUploadFile($request[Book::COVER_IMAGE]) : null,
+            Book::NUMBER_OF_PAGES => $request[Book::NUMBER_OF_PAGES],
+            Book::USER_ID => $request[Book::USER_ID],
+            Book::CREATED_ID => $request[Book::USER_ID],
+            Book::UPDATED_ID => $request[Book::USER_ID],
+        ];
+    }
+
+    /**
+     * ディレクトリの有無チェック、ディレクトリの作成、画像ファイルのアップロード
+     *
+     * @param object $imageFile
+     * @return string
+     */
+    public function checkAndUploadFile(object $imageFile): string
+    {
+        if (!file_exists(PathConst::PUBLIC_BOOK_PATH)) {
+            // ディレクトリが存在しない場合
+            mkdir(PathConst::PUBLIC_BOOK_PATH);
+        }
+        // 画像ファイルアップロード
+        $fileName = str_replace(PathConst::SAVE_BOOK_PATH . '/', '', $imageFile->storeAs(PathConst::SAVE_BOOK_PATH, $imageFile->getClientOriginalName()));
+        if ($imageFile->isValid()) {
+            // 画像アップロードに成功した場合
+            return $fileName;
+        } else {
+            // 画像アップロードに失敗した場合
+            throw new Exception();
+        }
+        // 保存した画像のパスの返却
+        return $fileName;
     }
 }

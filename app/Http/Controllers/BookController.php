@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Book\BookRequest;
 use App\Services\BookService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -29,19 +30,14 @@ class BookController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * 書籍登録API
+     *
+     * @param Request $request
+     * @return JsonResponse
      */
-    public function create()
+    public function store(BookRequest $request): JsonResponse
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
+        return $this->bookService->createBook($request);
     }
 
     /**
