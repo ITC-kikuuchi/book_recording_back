@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Consts\PathConst;
+use App\Http\Requests\Book\BookRequest;
 use App\Models\Book;
 use App\Repositories\Book\BookRepositoryInterface;
 use App\Traits\ExceptionHandlerTrait;
 use Exception;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class BookService
