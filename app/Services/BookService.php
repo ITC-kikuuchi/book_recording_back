@@ -57,6 +57,29 @@ class BookService
         return $this->okResponse($responseData);
     }
 
+    /**
+     * 書籍登録処理
+     *
+     * @param BookRequest $request
+     * @return JsonResponse
+     */
+    public function createBook(Request $request): JsonResponse
+    {
+        try {
+            // 登録データの作成
+            $bookData = $this->createBookData($request);
+            // データベーストランザクションを開始
+            DB::transaction(function () use ($bookData) {
+                // データ登録処理
+                return $this->bookRepositoryInterface->createBook($bookData);
+            });
+        } catch (Exception $e) {
+            // エラーハンドリング
+            return $this->exceptionHandler($e);
+        }
+        // 200 レスポンス
+        return $this->okResponse();
+    }
 
     /**
      * 登録データの作成
