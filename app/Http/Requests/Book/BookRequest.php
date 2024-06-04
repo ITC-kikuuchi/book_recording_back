@@ -28,7 +28,23 @@ class BookRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            Book::TITLE => ['required', 'max:255'],
+            Book::AUTHOR => ['max:255'],
+            Book::GENRE => ['max:255'],
+            Book::PUBLISHER => ['max:255'],
+            Book::ISBN => ['max:255'],
+            Book::COVER_IMAGE => ['mimes:jpeg,jpg,png', 'max:2048'],
+            Book::USER_ID => ['required', 'integer'],
         ];
+    }
+
+    /**
+     * エラーハンドリング
+     *
+     * @param Validator $validator
+     */
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException($this->unprocessableEntityResponse($validator->errors()->toArray()));
     }
 }
