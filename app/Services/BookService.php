@@ -56,4 +56,29 @@ class BookService
         // 200 レスポンス
         return $this->okResponse($responseData);
     }
+
+    /**
+     * ディレクトリの有無チェック、ディレクトリの作成、画像ファイルのアップロード
+     *
+     * @param object $imageFile
+     * @return string
+     */
+    public function checkAndUploadFile(object $imageFile): string
+    {
+        if (!file_exists(PathConst::PUBLIC_BOOK_PATH)) {
+            // ディレクトリが存在しない場合
+            mkdir(PathConst::PUBLIC_BOOK_PATH);
+        }
+        // 画像ファイルアップロード
+        $fileName = str_replace(PathConst::SAVE_BOOK_PATH . '/', '', $imageFile->storeAs(PathConst::SAVE_BOOK_PATH, $imageFile->getClientOriginalName()));
+        if ($imageFile->isValid()) {
+            // 画像アップロードに成功した場合
+            return $fileName;
+        } else {
+            // 画像アップロードに失敗した場合
+            throw new Exception();
+        }
+        // 保存した画像のパスの返却
+        return $fileName;
+    }
 }
