@@ -84,6 +84,41 @@ class BookService
     }
 
     /**
+     * 書籍詳細取得
+     *
+     * @param integer $id
+     * @return JsonResponse
+     */
+    public function getBookDetail(int $id): JsonResponse
+    {
+        // 初期値設定
+        $responseData = [];
+        try {
+            // id に紐づく書籍データの取得
+            $bookData = $this->bookRepositoryInterface->getBookDetail($id);
+            // データ存在チェック
+            $this->dataExistenceCheck($bookData);
+            // レスポンスデータの作成
+            $responseData = [
+                Book::ID => $bookData[Book::ID],
+                Book::TITLE => $bookData[Book::TITLE],
+                Book::AUTHOR => $bookData[Book::AUTHOR],
+                Book::GENRE => $bookData[Book::GENRE],
+                Book::PUBLICATION_YEAR => $bookData[Book::PUBLICATION_YEAR],
+                Book::PUBLISHER => $bookData[Book::PUBLISHER],
+                Book::ISBN => $bookData[Book::ISBN],
+                Book::COVER_IMAGE => $bookData[Book::COVER_IMAGE] ? asset(PathConst::PUBLIC_BOOK_PATH . '/' . $bookData[Book::COVER_IMAGE]) : null,
+                Book::USER_ID => $bookData[Book::USER_ID],
+            ];
+        } catch (Exception $e) {
+            // エラーハンドリング
+            return $this->exceptionHandler($e);
+        }
+        // 200 レスポンス
+        return $this->okResponse($responseData);
+    }
+
+    /**
      * 登録データの作成
      *
      * @param object $request
