@@ -41,11 +41,14 @@ class BookController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * 書籍詳細取得API
+     *
+     * @param integer $id
+     * @return JsonResponse
      */
-    public function show(string $id)
+    public function show(int $id): JsonResponse
     {
-        //
+        return $this->bookService->getBookDetail($id);
     }
 
     /**

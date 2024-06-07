@@ -37,4 +37,15 @@ class BookEloquentRepository implements BookRepositoryInterface
     {
         $this->book->create($bookData);
     }
+
+    /**
+     * 書籍詳細取得
+     *
+     * @param integer $bookId
+     * @return object|null
+     */
+    public function getBookDetail(int $bookId): object|null
+    {
+        return $this->book->find($bookId);
+    }
 }

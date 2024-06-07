@@ -19,4 +19,12 @@ interface BookRepositoryInterface
      * @param array $bookData
      */
     public function createBook(array $bookData);
+
+    /**
+     * 書籍詳細取得
+     *
+     * @param integer $bookId
+     * @return object|null
+     */
+    public function getBookDetail(int $bookId): object|null;
 }
