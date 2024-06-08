@@ -48,4 +48,15 @@ class BookEloquentRepository implements BookRepositoryInterface
     {
         return $this->book->find($bookId);
     }
+
+    /**
+     * 書籍更新処理
+     *
+     * @param int $id
+     * @param array $bookData
+     */
+    public function updateBook(int $id, array $bookData)
+    {
+        $this->book->where(Book::ID, $id)->update($bookData);
+    }
 }

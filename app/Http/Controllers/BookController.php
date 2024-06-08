@@ -52,19 +52,15 @@ class BookController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * 書籍更新API
+     *
+     * @param BookRequest $request
+     * @param integer $id
+     * @return JsonResponse
      */
-    public function edit(string $id)
+    public function update(BookRequest $request, int $id): JsonResponse
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
+        return $this->bookService->updateBook($request, $id);
     }
 
     /**

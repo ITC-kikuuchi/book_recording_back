@@ -27,4 +27,12 @@ interface BookRepositoryInterface
      * @return object|null
      */
     public function getBookDetail(int $bookId): object|null;
+
+    /**
+     * 書籍更新処理
+     *
+     * @param int $id
+     * @param array $bookData
+     */
+    public function updateBook(int $id, array $bookData);
 }
