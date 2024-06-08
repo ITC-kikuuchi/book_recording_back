@@ -52,11 +52,15 @@ class BookController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * 書籍更新API
+     *
+     * @param BookRequest $request
+     * @param integer $id
+     * @return JsonResponse
      */
-    public function update(Request $request, string $id)
+    public function update(BookRequest $request, int $id): JsonResponse
     {
-        //
+        return $this->bookService->updateBook($request, $id);
     }
 
     /**
