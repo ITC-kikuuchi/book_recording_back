@@ -120,6 +120,47 @@ class BookService
     }
 
     /**
+     * 書籍更新処理
+     *
+     * @param BookRequest $request
+     * @param int $id
+     * @return JsonResponse
+     */
+    public function updateBook(BookRequest $request, int $id): JsonResponse
+    {
+        try {
+            // id に紐づく書籍情報の取得
+            $book = $this->bookRepositoryInterface->getBookDetail($id);
+            // データ存在チェック
+            $this->dataExistenceCheck($book);
+            // 画像削除処理
+            if ($request[Book::COVER_IMAGE]) {
+                // 画像ファイルがリクエストされている場合
+                if ($book[Book::COVER_IMAGE] != $request[Book::COVER_IMAGE]->getClientOriginalName()) {
+                    // 既存の画像ファイル名とリクエストされた画像ファイル名が異なる場合
+                    // 既存の画像を削除
+                    $this->checkAndDeleteFile($book[Book::COVER_IMAGE]);
+                }
+            } else if ($book[Book::COVER_IMAGE]) {
+                // 画像ファイルがリクエストされておらず、既存の画像ファイルが存在する場合
+                $this->checkAndDeleteFile($book[Book::COVER_IMAGE]);
+            }
+            // 更新データの作成
+            $bookData = $this->createBookData($request);
+            // データベーストランザクションを開始
+            DB::transaction(function () use ($id, $bookData) {
+                // データ更新処理
+                $this->bookRepositoryInterface->updateBook($id, $bookData);
+            });
+        } catch (Exception $e) {
+            // エラーハンドリング
+            return $this->exceptionHandler($e);
+        }
+        // 200 レスポンス
+        return $this->okResponse();
+    }
+
+    /**
      * 登録データの作成
      *
      * @param object $request
