@@ -167,4 +167,19 @@ class BookService
         // 保存した画像のパスの返却
         return $fileName;
     }
+
+    /**
+     * 画像ファイルの有無チェック、画像ファイル削除
+     *
+     * @param string $imageUrl
+     */
+    private function checkAndDeleteFile(string $imageUrl)
+    {
+        // ファイルの有無をチェック
+        if (file_exists(PathConst::PUBLIC_BOOK_PATH . '/' . $imageUrl)) {
+            // ファイルが存在した場合
+            // ファイルを削除するメソッドの呼び出し
+            Storage::delete(PathConst::SAVE_BOOK_PATH . '/' . $imageUrl);
+        }
+    }
 }
