@@ -35,4 +35,11 @@ interface BookRepositoryInterface
      * @param array $bookData
      */
     public function updateBook(int $id, array $bookData);
+
+    /**
+     * 書籍削除処理
+     *
+     * @param int $id
+     */
+    public function deleteBook(int $id);
 }

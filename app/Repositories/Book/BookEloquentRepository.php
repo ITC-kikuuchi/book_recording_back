@@ -59,4 +59,14 @@ class BookEloquentRepository implements BookRepositoryInterface
     {
         $this->book->where(Book::ID, $id)->update($bookData);
     }
+
+    /**
+     * 書籍削除処理
+     *
+     * @param int $id
+     */
+    public function deleteBook(int $id)
+    {
+        $this->book->destroy($id);
+    }
 }
