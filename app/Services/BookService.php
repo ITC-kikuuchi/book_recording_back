@@ -161,6 +161,37 @@ class BookService
     }
 
     /**
+     * 書籍削除処理
+     *
+     * @param int $id
+     * @return JsonResponse
+     */
+    public function deleteBook(int $id): JsonResponse
+    {
+        try {
+            // id に紐づく書籍情報の取得
+            $book = $this->bookRepositoryInterface->getBookDetail($id);
+            // データ存在チェック
+            $this->dataExistenceCheck($book);
+            // データベーストランザクションを開始
+            DB::transaction(function () use ($id) {
+                // データ削除処理
+                $this->bookRepositoryInterface->deleteBook($id);
+            });
+            // 画像ファイル削除処理
+            if ($book[Book::COVER_IMAGE]) {
+                // 既存の画像ファイルが存在する場合
+                $this->checkAndDeleteFile($book[Book::COVER_IMAGE]);
+            }
+        } catch (Exception $e) {
+            // エラーハンドリング
+            return $this->exceptionHandler($e);
+        }
+        // 200 レスポンス
+        return $this->okResponse();
+    }
+
+    /**
      * 登録データの作成
      *
      * @param object $request
