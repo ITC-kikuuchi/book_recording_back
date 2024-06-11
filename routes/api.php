@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\MemoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,4 +22,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('me', [AuthController::class, 'me']);
     // 書籍API
     Route::apiResource('books', BookController::class, ['only' => ['index', 'store', 'show', 'update', 'destroy']]);
+    // メモAPI
+    Route::apiResource('memos', MemoController::class, ['only' => ['index', 'store', 'update', 'destroy']]);
 });
