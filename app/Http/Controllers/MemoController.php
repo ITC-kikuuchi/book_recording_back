@@ -2,16 +2,31 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\MemoService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class MemoController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * MemoController コンストラクタ
+     * MemoService の依存性を注入する
+     *
+     * @param MemoService $memoService
      */
-    public function index()
+    public function __construct(protected MemoService $memoService)
     {
-        //
+    }
+
+    /**
+     * メモ一覧取得API
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function index(Request $request): JsonResponse
+    {
+        return $this->memoService->getMemo($request);
     }
 
     /**

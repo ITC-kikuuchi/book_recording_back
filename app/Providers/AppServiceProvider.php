@@ -27,5 +27,9 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\Book\BookRepositoryInterface::class,
             \App\Repositories\Book\BookEloquentRepository::class
         );
+        $this->app->bind(
+            \App\Repositories\Memo\MemoRepositoryInterface::class,
+            \App\Repositories\Memo\MemoEloquentRepository::class
+        );
     }
 }
