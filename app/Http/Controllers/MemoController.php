@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Services\MemoService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class MemoController extends Controller
