@@ -19,11 +19,14 @@ class MemoController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * メモ一覧取得API
+     *
+     * @param Request $request
+     * @return JsonResponse
      */
-    public function index()
+    public function index(Request $request): JsonResponse
     {
-        //
+        return $this->memoService->getMemo($request);
     }
 
     /**
