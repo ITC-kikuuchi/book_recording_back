@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\MemoService;
 use Illuminate\Http\Request;
 
 class MemoController extends Controller
