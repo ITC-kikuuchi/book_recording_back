@@ -8,6 +8,16 @@ use Illuminate\Http\Request;
 class MemoController extends Controller
 {
     /**
+     * MemoController コンストラクタ
+     * MemoService の依存性を注入する
+     *
+     * @param MemoService $memoService
+     */
+    public function __construct(protected MemoService $memoService)
+    {
+    }
+
+    /**
      * Display a listing of the resource.
      */
     public function index()
