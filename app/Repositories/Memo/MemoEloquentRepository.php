@@ -17,4 +17,15 @@ class MemoEloquentRepository implements MemoRepositoryInterface
     public function __construct(protected Memo $memo)
     {
     }
+
+    /**
+     * メモ一覧取得
+     *
+     * @param integer $bookId
+     * @return object|null
+     */
+    public function getMemos(int $bookId): object|null
+    {
+        return $this->memo->where(Memo::BOOK_ID, $bookId)->get();
+    }
 }
