@@ -31,7 +31,7 @@ class MemoService
      * @param Request $request
      * @return JsonResponse
      */
-    public function getMemo(Request $request): JsonResponse
+    public function getMemos(Request $request): JsonResponse
     {
         // レスポンスデータ初期化
         $responseData = [];
