@@ -26,7 +26,7 @@ class MemoController extends Controller
      */
     public function index(Request $request): JsonResponse
     {
-        return $this->memoService->getMemo($request);
+        return $this->memoService->getMemos($request);
     }
 
     /**
