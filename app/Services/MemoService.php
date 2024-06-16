@@ -10,6 +10,7 @@ use App\Traits\ExceptionHandlerTrait;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class MemoService
 {
@@ -51,5 +52,35 @@ class MemoService
         }
         // 200 レスポンス
         return $this->okResponse($responseData);
+    }
+
+    /**
+     * メモ登録処理
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function createMemo(Request $request): JsonResponse
+    {
+        try {
+            // 登録データの作成
+            foreach ($request[Memo::MEMOS] as $value) {
+                $memoData[] = [
+                    Memo::PAGE_NUMBER => $value[Memo::PAGE_NUMBER],
+                    Memo::MEMO => $value[Memo::MEMO],
+                    Memo::BOOK_ID => $request[Memo::BOOK_ID]
+                ];
+            }
+            // データベーストランザクションを開始
+            DB::transaction(function () use ($memoData) {
+                // データ登録処理
+                $this->memoRepositoryInterface->createMemo($memoData);
+            });
+        } catch (Exception $e) {
+            // エラーハンドリング
+            return $this->exceptionHandler($e);
+        }
+        // 200 レスポンス
+        return $this->okResponse();
     }
 }

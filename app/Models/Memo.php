@@ -30,4 +30,7 @@ class Memo extends Model
         self::CREATED_AT,
         self::UPDATED_AT,
     ];
+
+    // リクエスト用
+    const MEMOS = 'memos';
 }

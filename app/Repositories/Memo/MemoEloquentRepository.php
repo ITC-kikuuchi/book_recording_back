@@ -28,4 +28,14 @@ class MemoEloquentRepository implements MemoRepositoryInterface
     {
         return $this->memo->where(Memo::BOOK_ID, $bookId)->get();
     }
+
+    /**
+     * メモ登録処理
+     *
+     * @param array $memoData
+     */
+    public function createMemo(array $memoData)
+    {
+        $this->memo->insert($memoData);
+    }
 }

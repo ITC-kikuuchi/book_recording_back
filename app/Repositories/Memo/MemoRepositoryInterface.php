@@ -13,4 +13,11 @@ interface MemoRepositoryInterface
      * @return object|null
      */
     public function getMemos(int $bookId): object|null;
+
+    /**
+     * メモ登録処理
+     *
+     * @param array $memoData
+     */
+    public function createMemo(array $memoData);
 }
