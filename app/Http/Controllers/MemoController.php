@@ -30,11 +30,14 @@ class MemoController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * メモ登録処理
+     *
+     * @param Request $request
+     * @return JsonResponse
      */
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
-        //
+        return $this->memoService->createMemo($request);
     }
 
     /**
