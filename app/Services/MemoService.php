@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Models\Memo;
+use App\Repositories\Book\BookRepositoryInterface;
 use App\Repositories\Memo\MemoRepositoryInterface;
+use App\Traits\DataExistenceCheckTrait;
 use App\Traits\ExceptionHandlerTrait;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -15,6 +17,7 @@ use Illuminate\Support\Facades\DB;
 class MemoService
 {
     use ExceptionHandlerTrait;
+    use DataExistenceCheckTrait;
 
     /**
      * MemoService コンストラクタ
@@ -22,8 +25,10 @@ class MemoService
      *
      * @param MemoRepositoryInterface $memoRepositoryInterface
      */
-    public function __construct(protected MemoRepositoryInterface $memoRepositoryInterface)
-    {
+    public function __construct(
+        protected MemoRepositoryInterface $memoRepositoryInterface,
+        protected BookRepositoryInterface $bookRepositoryInterface
+    ) {
     }
 
     /**
@@ -75,6 +80,40 @@ class MemoService
             DB::transaction(function () use ($memoData) {
                 // データ登録処理
                 $this->memoRepositoryInterface->createMemo($memoData);
+            });
+        } catch (Exception $e) {
+            // エラーハンドリング
+            return $this->exceptionHandler($e);
+        }
+        // 200 レスポンス
+        return $this->okResponse();
+    }
+
+    /**
+     * メモ更新処理
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function updateMemo(Request $request, $id): JsonResponse
+    {
+        try {
+            // データ存在チェック
+            $this->dataExistenceCheck($this->bookRepositoryInterface->getBookDetail((int)$id));
+            // 更新データの作成
+            foreach ($request[Memo::MEMOS] as $value) {
+                $memoData[] = [
+                    Memo::ID => $value[Memo::ID],
+                    Memo::UPDATE_DATA => [
+                        Memo::PAGE_NUMBER => $value[Memo::PAGE_NUMBER],
+                        Memo::MEMO => $value[Memo::MEMO],
+                    ],
+                ];
+            }
+            // データベーストランザクションを開始
+            DB::transaction(function () use ($memoData) {
+                // データ更新処理
+                $this->memoRepositoryInterface->updateMemo($memoData);
             });
         } catch (Exception $e) {
             // エラーハンドリング

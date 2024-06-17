@@ -33,4 +33,6 @@ class Memo extends Model
 
     // リクエスト用
     const MEMOS = 'memos';
+    // データ更新用
+    const UPDATE_DATA = 'update_data';
 }
