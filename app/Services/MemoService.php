@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Models\Memo;
+use App\Repositories\Book\BookRepositoryInterface;
 use App\Repositories\Memo\MemoRepositoryInterface;
+use App\Traits\DataExistenceCheckTrait;
 use App\Traits\ExceptionHandlerTrait;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -15,6 +17,7 @@ use Illuminate\Support\Facades\DB;
 class MemoService
 {
     use ExceptionHandlerTrait;
+    use DataExistenceCheckTrait;
 
     /**
      * MemoService コンストラクタ
