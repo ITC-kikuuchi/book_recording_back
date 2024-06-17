@@ -25,8 +25,10 @@ class MemoService
      *
      * @param MemoRepositoryInterface $memoRepositoryInterface
      */
-    public function __construct(protected MemoRepositoryInterface $memoRepositoryInterface)
-    {
+    public function __construct(
+        protected MemoRepositoryInterface $memoRepositoryInterface,
+        protected BookRepositoryInterface $bookRepositoryInterface
+    ) {
     }
 
     /**
