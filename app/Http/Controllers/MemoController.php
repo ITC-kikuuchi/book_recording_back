@@ -41,11 +41,15 @@ class MemoController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * メモ更新処理
+     *
+     * @param Request $request
+     * @param string $id
+     * @return JsonResponse
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $id): JsonResponse
     {
-        //
+        return $this->memoService->updateMemo($request, $id);
     }
 
     /**
