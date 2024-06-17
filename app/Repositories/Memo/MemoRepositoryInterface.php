@@ -20,4 +20,11 @@ interface MemoRepositoryInterface
      * @param array $memoData
      */
     public function createMemo(array $memoData);
+
+    /**
+     * メモ更新処理
+     *
+     * @param array $memoData
+     */
+    public function updateMemo(array $memoData);
 }

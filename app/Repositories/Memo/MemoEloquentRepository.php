@@ -38,4 +38,16 @@ class MemoEloquentRepository implements MemoRepositoryInterface
     {
         $this->memo->insert($memoData);
     }
+
+    /**
+     * メモ更新処理
+     *
+     * @param array $memoData
+     */
+    public function updateMemo(array $memoData)
+    {
+        foreach ($memoData as $value) {
+            $this->memo->where(Memo::ID, $value[Memo::ID])->update($value[Memo::UPDATE_DATA]);
+        }
+    }
 }
