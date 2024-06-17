@@ -88,4 +88,38 @@ class MemoService
         // 200 レスポンス
         return $this->okResponse();
     }
+
+    /**
+     * メモ更新処理
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function updateMemo(Request $request, $id): JsonResponse
+    {
+        try {
+            // データ存在チェック
+            $this->dataExistenceCheck($this->bookRepositoryInterface->getBookDetail((int)$id));
+            // 更新データの作成
+            foreach ($request[Memo::MEMOS] as $value) {
+                $memoData[] = [
+                    Memo::ID => $value[Memo::ID],
+                    Memo::UPDATE_DATA => [
+                        Memo::PAGE_NUMBER => $value[Memo::PAGE_NUMBER],
+                        Memo::MEMO => $value[Memo::MEMO],
+                    ],
+                ];
+            }
+            // データベーストランザクションを開始
+            DB::transaction(function () use ($memoData) {
+                // データ更新処理
+                $this->memoRepositoryInterface->updateMemo($memoData);
+            });
+        } catch (Exception $e) {
+            // エラーハンドリング
+            return $this->exceptionHandler($e);
+        }
+        // 200 レスポンス
+        return $this->okResponse();
+    }
 }
