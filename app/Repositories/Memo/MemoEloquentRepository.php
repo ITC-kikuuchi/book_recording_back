@@ -40,6 +40,17 @@ class MemoEloquentRepository implements MemoRepositoryInterface
     }
 
     /**
+     * メモ詳細取得処理
+     *
+     * @param integer $id
+     * @return object|null
+     */
+    public function getMemoDetail(int $id): object|null
+    {
+        return $this->memo->find($id);
+    }
+
+    /**
      * メモ更新処理
      *
      * @param array $memoData
