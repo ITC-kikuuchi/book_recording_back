@@ -61,4 +61,14 @@ class MemoEloquentRepository implements MemoRepositoryInterface
             $this->memo->where(Memo::ID, $value[Memo::ID])->update($value[Memo::UPDATE_DATA]);
         }
     }
+
+    /**
+     * メモ削除処理
+     *
+     * @param int $id
+     */
+    public function deleteMemo(int $id)
+    {
+        $this->memo->destroy($id);
+    }
 }

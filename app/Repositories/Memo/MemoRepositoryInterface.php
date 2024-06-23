@@ -35,4 +35,11 @@ interface MemoRepositoryInterface
      * @param array $memoData
      */
     public function updateMemo(array $memoData);
+
+    /**
+     * メモ削除処理
+     *
+     * @param int $id
+     */
+    public function deleteMemo(int $id);
 }
