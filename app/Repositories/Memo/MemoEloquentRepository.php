@@ -40,6 +40,17 @@ class MemoEloquentRepository implements MemoRepositoryInterface
     }
 
     /**
+     * メモ詳細取得処理
+     *
+     * @param integer $id
+     * @return object|null
+     */
+    public function getMemoDetail(int $id): object|null
+    {
+        return $this->memo->find($id);
+    }
+
+    /**
      * メモ更新処理
      *
      * @param array $memoData
@@ -49,5 +60,15 @@ class MemoEloquentRepository implements MemoRepositoryInterface
         foreach ($memoData as $value) {
             $this->memo->where(Memo::ID, $value[Memo::ID])->update($value[Memo::UPDATE_DATA]);
         }
+    }
+
+    /**
+     * メモ削除処理
+     *
+     * @param int $id
+     */
+    public function deleteMemo(int $id)
+    {
+        $this->memo->destroy($id);
     }
 }

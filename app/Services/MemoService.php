@@ -122,4 +122,28 @@ class MemoService
         // 200 レスポンス
         return $this->okResponse();
     }
+
+    /**
+     * メモ削除処理
+     *
+     * @param int $id
+     * @return JsonResponse
+     */
+    public function deleteMemo(int $id): JsonResponse
+    {
+        try {
+            // データ存在チェック
+            $this->dataExistenceCheck($this->memoRepositoryInterface->getMemoDetail($id));
+            // データベーストランザクションを開始
+            DB::transaction(function () use ($id) {
+                // データ削除処理
+                $this->memoRepositoryInterface->deleteMemo($id);
+            });
+        } catch (Exception $e) {
+            // エラーハンドリング
+            return $this->exceptionHandler($e);
+        }
+        // 200 レスポンス
+        return $this->okResponse();
+    }
 }

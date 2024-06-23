@@ -53,10 +53,13 @@ class MemoController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * メモ削除処理
+     *
+     * @param integer $id
+     * @return JsonResponse
      */
-    public function destroy(string $id)
+    public function destroy(int $id): JsonResponse
     {
-        //
+        return $this->memoService->deleteMemo($id);
     }
 }
